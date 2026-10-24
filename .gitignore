@@ -1,0 +1,29 @@
+# Gradle y Maven
+.gradle/
+build/
+target/
+
+# Logs y reportes
+*.log
+test-output/
+
+# IDEs y editores (IntelliJ IDEA, Eclipse, VS Code)
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+.vscode/
+.settings/
+.project
+.classpath
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos temporales o de crash
+*.tmp
+*.bak
+hs_err_pid*

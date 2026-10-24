@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.automation.api'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    restAssuredVersion = '5.4.0'
+    cucumberVersion = '7.16.0'
+    testngVersion = '7.10.2'
+    jacksonVersion = '2.17.0'
+    slf4jVersion = '2.0.13'
+}
+
+dependencies {
+    // RestAssured para interacción HTTP y pruebas de API REST
+    testImplementation "io.rest-assured:rest-assured:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-path:${restAssuredVersion}"
+    testImplementation "io.rest-assured:json-schema-validator:${restAssuredVersion}"
+
+    // Cucumber BDD con Java y TestNG
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-testng:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-picocontainer:${cucumberVersion}"
+
+    // TestNG Framework de Pruebas
+    testImplementation "org.testng:testng:${testngVersion}"
+
+    // Jackson Databind para serialización y mapeo de objetos JSON
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+
+    // SLF4J Logger para salidas limpias de consola
+    testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useTestNG() {
+        useDefaultListeners = true
+    }
+    scanForTestClasses = false
+    include '**/*Runner*.class'
+    include '**/*Test*.class'
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
+    systemProperty 'file.encoding', 'UTF-8'
+    systemProperties System.getProperties()
+}
